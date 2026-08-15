@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>UI Peeper — every breakpoint at once</title>
+    <meta
+      name="description"
+      content="Load any webpage at several breakpoints side by side and export full-page screenshots of each."
+    />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230d0f12'/%3E%3Crect x='6' y='9' width='6' height='14' rx='1.5' fill='%235eead4'/%3E%3Crect x='14' y='9' width='7' height='14' rx='1.5' fill='%235eead4' opacity='.66'/%3E%3Crect x='23' y='9' width='4' height='14' rx='1.5' fill='%235eead4' opacity='.4'/%3E%3C/svg%3E"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <svg class="mark" viewBox="0 0 32 32" aria-hidden="true">
+          <rect x="6" y="9" width="6" height="14" rx="1.5" />
+          <rect x="14" y="9" width="7" height="14" rx="1.5" opacity=".66" />
+          <rect x="23" y="9" width="4" height="14" rx="1.5" opacity=".4" />
+        </svg>
+        <h1>UI Peeper</h1>
+      </div>
+
+      <form class="url-form" id="url-form">
+        <input
+          id="url-input"
+          type="text"
+          name="url"
+          placeholder="example.com"
+          autocomplete="url"
+          spellcheck="false"
+          aria-label="Website address"
+        />
+        <button type="submit" class="btn btn-primary" id="load-btn">Load</button>
+      </form>
+
+      <div class="modes" role="group" aria-label="View mode">
+        <button type="button" class="mode" id="mode-live" data-mode="live" aria-pressed="true">
+          Live
+        </button>
+        <button type="button" class="mode" id="mode-shots" data-mode="shots" aria-pressed="false">
+          Shots
+        </button>
+      </div>
+
+      <div class="actions">
+        <button type="button" class="btn" id="capture-btn" disabled>Capture</button>
+        <button type="button" class="btn" id="zip-btn" disabled>Download all</button>
+      </div>
+    </header>
+
+    <div class="subbar">
+      <div class="chips" id="chips" role="group" aria-label="Breakpoints"></div>
+      <button type="button" class="chip-add" id="add-chip">+ breakpoint</button>
+      <p class="status" id="status" role="status" aria-live="polite"></p>
+    </div>
+
+    <main class="panes" id="panes"></main>
+
+    <section class="empty" id="empty">
+      <div class="empty-inner">
+        <h2>Every breakpoint at once.</h2>
+        <p>
+          Drop in a URL to see it rendered side by side at each width. Sites that allow embedding
+          load live; the rest fall back to full-page screenshots — and either way you can export a
+          PNG per breakpoint.
+        </p>
+        <ul class="examples" id="examples">
+          <li><button type="button" data-url="developer.mozilla.org">developer.mozilla.org</button></li>
+          <li><button type="button" data-url="example.com">example.com</button></li>
+          <li><button type="button" data-url="wikipedia.org">wikipedia.org</button></li>
+        </ul>
+      </div>
+    </section>
+
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>

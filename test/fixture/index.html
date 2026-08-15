@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Breakpoint fixture</title>
+    <style>
+      * { box-sizing: border-box; }
+      body { margin: 0; font: 16px/1.5 system-ui, sans-serif; }
+      .banner { padding: 40px 24px; color: #fff; }
+      .label::after { content: 'MOBILE'; }
+      .banner { background: #b4245e; }
+      .grid { display: grid; gap: 16px; padding: 24px; grid-template-columns: 1fr; }
+      .card { padding: 32px 16px; background: #eee; border-radius: 8px; }
+      h1 { margin: 0 0 8px; font-size: 28px; }
+
+      /* Each breakpoint gets a different colour and column count, so a wrong
+         viewport width is obvious in the screenshot rather than subtle. */
+      @media (min-width: 700px) {
+        .banner { background: #1d7a5f; }
+        .label::after { content: 'TABLET'; }
+        .grid { grid-template-columns: repeat(2, 1fr); }
+      }
+      @media (min-width: 1200px) {
+        .banner { background: #2f4fd0; }
+        .label::after { content: 'DESKTOP'; }
+        .grid { grid-template-columns: repeat(4, 1fr); }
+      }
+
+      /* Tall enough to force a full-page capture well past one viewport. */
+      .filler { height: 1400px; background: linear-gradient(#fafafa, #d8d8d8); }
+
+      /* Only revealed once scrolled into view, to prove auto-scroll works. */
+      .lazy { opacity: 0; transition: opacity 400ms; padding: 24px; font-weight: 700; }
+      .lazy.seen { opacity: 1; }
+    </style>
+  </head>
+  <body>
+    <div class="banner">
+      <h1>Breakpoint fixture</h1>
+      <p>Rendering as: <strong class="label"></strong></p>
+    </div>
+    <div class="grid">
+      <div class="card">one</div>
+      <div class="card">two</div>
+      <div class="card">three</div>
+      <div class="card">four</div>
+    </div>
+    <div class="filler"></div>
+    <p class="lazy" id="lazy">Revealed after scrolling into view.</p>
+    <script>
+      const target = document.getElementById('lazy');
+      new IntersectionObserver((entries) => {
+        for (const e of entries) if (e.isIntersecting) target.classList.add('seen');
+      }).observe(target);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,15 @@
+node_modules/
+npm-debug.log*
+*.log
+
+# Local env overrides (CHROMIUM_EXECUTABLE_PATH, PORT, limits)
+.env
+.env.*
+!.env.example
+
+# Scratch files from local debugging
+.pwtest*.mjs
+.debug*.mjs
+.verify*.mjs
+
+.DS_Store

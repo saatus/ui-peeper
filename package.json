@@ -1,0 +1,20 @@
+{
+  "name": "ui-peeper",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "View any webpage at several breakpoints at once, and export full-page screenshots of each.",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "test": "node --test \"src/**/*.test.js\"",
+    "test:e2e": "node --test test/capture.e2e.js"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "playwright": "^1.56.0"
+  }
+}

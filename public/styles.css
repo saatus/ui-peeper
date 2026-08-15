@@ -1,0 +1,509 @@
+:root {
+  --bg: #0d0f12;
+  --panel: #14171c;
+  --panel-2: #1a1e25;
+  --line: #262b33;
+  --line-soft: #1f242b;
+  --text: #e7ebf0;
+  --muted: #8b95a5;
+  --muted-dim: #626c7a;
+  --accent: #5eead4;
+  --accent-ink: #04322c;
+  --danger: #fca5a5;
+  --warn: #fcd34d;
+  --radius: 8px;
+  --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, Helvetica, Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/*
+ * The UA stylesheet's `[hidden] { display: none }` loses to any author rule that
+ * sets `display`, so `.overlay { display: flex }` would keep the overlay painted
+ * over the stage forever. Every toggle in app.js goes through the hidden
+ * attribute, so this one rule is what makes all of them work.
+ */
+[hidden] {
+  display: none !important;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  color: var(--text);
+  font: 14px/1.5 var(--sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ------------------------------------------------------------------ top bar */
+
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--line);
+  background: var(--panel);
+  flex-wrap: wrap;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.brand .mark {
+  width: 26px;
+  height: 26px;
+  fill: var(--accent);
+}
+
+.brand h1 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+
+.url-form {
+  display: flex;
+  gap: 8px;
+  flex: 1 1 320px;
+  min-width: 260px;
+}
+
+#url-input {
+  flex: 1;
+  min-width: 0;
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--bg);
+  color: var(--text);
+  font: 13px/1.4 var(--mono);
+}
+
+#url-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgb(94 234 212 / 0.13);
+}
+
+#url-input::placeholder {
+  color: var(--muted-dim);
+}
+
+/* ------------------------------------------------------------------ buttons */
+
+.btn {
+  padding: 8px 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--panel-2);
+  color: var(--text);
+  font: 500 13px/1 var(--sans);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: border-color 0.12s, background 0.12s;
+}
+
+.btn:hover:not(:disabled) {
+  border-color: #39414d;
+  background: #212630;
+}
+
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+  font-weight: 600;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: #7af0dd;
+  border-color: #7af0dd;
+}
+
+.modes {
+  display: flex;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.mode {
+  padding: 8px 14px;
+  border: 0;
+  background: var(--panel-2);
+  color: var(--muted);
+  font: 500 13px/1 var(--sans);
+  cursor: pointer;
+}
+
+.mode + .mode {
+  border-left: 1px solid var(--line);
+}
+
+.mode[aria-pressed='true'] {
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-weight: 600;
+}
+
+.mode:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* ------------------------------------------------------------------ sub bar */
+
+.subbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px;
+  border-bottom: 1px solid var(--line);
+  background: var(--panel);
+  flex-wrap: wrap;
+}
+
+.chips {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 6px 4px 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--panel-2);
+  font: 12px/1 var(--mono);
+  color: var(--muted);
+}
+
+.chip input {
+  width: 52px;
+  padding: 2px 4px;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--text);
+  font: 12px/1.3 var(--mono);
+  text-align: right;
+  -moz-appearance: textfield;
+}
+
+.chip input::-webkit-outer-spin-button,
+.chip input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.chip input:focus {
+  outline: none;
+  background: var(--bg);
+  box-shadow: 0 0 0 2px rgb(94 234 212 / 0.3);
+}
+
+.chip .remove {
+  width: 18px;
+  height: 18px;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--muted-dim);
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.chip .remove:hover {
+  background: #2c323c;
+  color: var(--danger);
+}
+
+.chip-add {
+  padding: 5px 11px;
+  border: 1px dashed var(--line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  font: 12px/1 var(--mono);
+  cursor: pointer;
+}
+
+.chip-add:hover:not(:disabled) {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.chip-add:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.status {
+  margin: 0 0 0 auto;
+  font: 12px/1.4 var(--mono);
+  color: var(--muted);
+}
+
+.status.error {
+  color: var(--danger);
+}
+
+.status.warn {
+  color: var(--warn);
+}
+
+/* -------------------------------------------------------------------- panes */
+
+.panes {
+  flex: 1;
+  display: flex;
+  gap: 1px;
+  min-height: 0;
+  background: var(--line-soft);
+}
+
+.panes:empty {
+  display: none;
+}
+
+.pane {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  background: var(--bg);
+}
+
+.pane-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 10px;
+  border-bottom: 1px solid var(--line);
+  background: var(--panel);
+}
+
+.pane-head .label {
+  font: 600 12px/1 var(--sans);
+  letter-spacing: 0.01em;
+}
+
+.pane-head .dim {
+  font: 11px/1 var(--mono);
+  color: var(--muted-dim);
+}
+
+.pane-head .spacer {
+  flex: 1;
+}
+
+.pane-head .icon-btn {
+  padding: 4px 8px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: transparent;
+  color: var(--muted);
+  font: 11px/1 var(--mono);
+  cursor: pointer;
+}
+
+.pane-head .icon-btn:hover:not(:disabled) {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.pane-head .icon-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.stage {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  background: #fff;
+}
+
+.stage.scrolls {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* Live pane: the iframe renders at true breakpoint width, then gets scaled. */
+.viewport {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-origin: top left;
+}
+
+.viewport iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: #fff;
+}
+
+.shot {
+  display: block;
+  width: 100%;
+  margin: 0 auto;
+  background: #fff;
+}
+
+/* Overlays sit on the white stage, so they get their own dark card. */
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: var(--bg);
+  text-align: center;
+}
+
+.overlay-card {
+  max-width: 280px;
+}
+
+.overlay h3 {
+  margin: 0 0 6px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.overlay p {
+  margin: 0 0 12px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.overlay code {
+  font: 11px/1.4 var(--mono);
+  color: var(--warn);
+}
+
+.spinner {
+  width: 22px;
+  height: 22px;
+  margin: 0 auto 10px;
+  border: 2px solid var(--line);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation-duration: 2.5s;
+  }
+}
+
+/* -------------------------------------------------------------- empty state */
+
+.empty {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+}
+
+.empty-inner {
+  max-width: 460px;
+  text-align: center;
+}
+
+.empty h2 {
+  margin: 0 0 10px;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.empty p {
+  margin: 0 0 20px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.examples {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.examples button {
+  padding: 6px 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--panel-2);
+  color: var(--muted);
+  font: 12px/1 var(--mono);
+  cursor: pointer;
+}
+
+.examples button:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* Below this the panes stop being a useful comparison, so stack them. */
+@media (max-width: 720px) {
+  .panes {
+    flex-direction: column;
+    overflow-y: auto;
+  }
+
+  .pane {
+    flex: 0 0 70vh;
+  }
+
+  .status {
+    margin-left: 0;
+  }
+}
