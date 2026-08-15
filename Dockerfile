@@ -14,6 +14,8 @@ RUN npm ci --omit=dev && npm cache clean --force
 
 COPY src ./src
 COPY public ./public
+# The licence travels with the binary it covers.
+COPY LICENSE ./
 
 # Chromium's sandbox is left enabled in browser.js, and it cannot be used by
 # root. The Playwright image ships this unprivileged user for exactly that.

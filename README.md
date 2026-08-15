@@ -161,10 +161,26 @@ Premium candidates (all of which the headless browser can already reach):
 - Scheduled captures and visual diffs between runs
 - PDF/contact-sheet export
 
-## Open decisions
+## Licence
 
-- **Licence is deliberately unset.** MIT invites contributors but lets anyone host the
-  premium features as a competitor. AGPL-3.0 keeps it free to use while requiring hosted
-  forks to publish their changes, which fits a free-plus-premium plan better. Worth
-  settling before the repo goes public, since contributions are licensed under whatever is
-  in place when they land.
+**AGPL-3.0-only** — see [`LICENSE`](./LICENSE).
+
+Free to use, self-host and modify. The one obligation that matters: if you run a
+**modified** version as a network service, you have to offer your users the source of
+your version (§13). Plain GPL would not cover that, because hosting isn't distribution —
+which is exactly why AGPL is the right fit for a hosted tool.
+
+The `AGPL-3.0 · source` link in the app header is that offer. **If you deploy a fork,
+repoint it at your own repository** — leaving it aimed here does not satisfy §13 for your
+version.
+
+Contributions: see [`CONTRIBUTING.md`](./CONTRIBUTING.md). A CLA is not in place yet, so
+large contributions may be asked to wait until it is — relicensing later requires the
+permission of every contributor, and that is not fixable after the fact.
+
+## Roadmap note on the premium tier
+
+The premium ideas above are intended to live in a **separate private repository** rather
+than behind a feature flag in this one. Open-core is cleaner than trying to licence-gate
+features inside a single codebase, and it keeps this repo genuinely useful on its own
+rather than a demo with the good parts removed.

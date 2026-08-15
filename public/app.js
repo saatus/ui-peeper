@@ -257,8 +257,11 @@ function overlayCard({ title, body, code, spinner, action }) {
 }
 
 function render() {
-  const hasPanes = state.url && state.breakpoints.length > 0;
-  els.empty.hidden = Boolean(hasPanes);
+  // Panes exist as soon as breakpoints do, but showing them before a URL is
+  // loaded puts three blank white stages above the empty state.
+  const hasPanes = Boolean(state.url) && state.breakpoints.length > 0;
+  els.empty.hidden = hasPanes;
+  els.panes.hidden = !hasPanes;
 
   els.modeLive.setAttribute('aria-pressed', String(state.mode === 'live'));
   els.modeShots.setAttribute('aria-pressed', String(state.mode === 'shots'));

@@ -177,6 +177,20 @@ body {
   gap: 8px;
 }
 
+/* The AGPL section 13 source offer. Quiet, but always on screen. */
+.source-link {
+  color: var(--muted-dim);
+  font: 11px/1 var(--mono);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.source-link:hover,
+.source-link:focus-visible {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
 /* ------------------------------------------------------------------ sub bar */
 
 .subbar {
