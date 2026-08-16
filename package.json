@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "description": "View any webpage at several breakpoints at once, and export full-page screenshots of each.",
+  "author": "Santiago Acosta",
   "license": "AGPL-3.0-only",
   "repository": {
     "type": "git",

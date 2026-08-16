@@ -1,11 +1,5 @@
 # Contributor License Agreement
 
-> **⚠️ Before this repository is made public, replace every occurrence of
-> `[PROJECT OWNER]` below with the full legal name of the person or company that owns
-> the project** (for example `Jane Smith` or `Wave Experimental Ltd`). An agreement
-> signed against an unfilled placeholder may not be enforceable. Delete this notice
-> once that is done.
-
 ## In plain English
 
 This is the standard bargain that lets an open-source project stay maintainable:
@@ -25,7 +19,7 @@ used Apache Individual Contributor License Agreement v2.0.
 ## Agreement
 
 You accept and agree to the following terms and conditions for Your present and future
-Contributions submitted to `[PROJECT OWNER]` (the "Owner") in respect of the software
+Contributions submitted to Santiago Acosta (the "Owner") in respect of the software
 project known as UI Peeper (the "Project"). Except for the licences granted here to the
 Owner and recipients of software distributed by the Owner, You reserve all right, title
 and interest in and to Your Contributions.

@@ -1,0 +1,99 @@
+name: CI
+
+# Deliberately a separate workflow from cla.yml. This one runs on
+# `pull_request`, so it gets a read-only token and no secrets even when the pull
+# request comes from a fork — which is what makes it safe to check out and run
+# contributor code. cla.yml uses `pull_request_target` and must never do that.
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+# A new push to the same branch makes the previous run irrelevant.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  unit:
+    name: Unit tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+
+      - name: Set up Node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 22
+          cache: npm
+
+      # No browser download needed: the unit tests cover the URL guard, the
+      # framing verdicts and the zip writer, none of which start Chromium.
+      - name: Install dependencies
+        run: npm ci
+        env:
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1
+
+      - name: Run unit tests
+        run: npm test
+
+  e2e:
+    name: End-to-end capture
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+
+      - name: Set up Node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+        env:
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1
+
+      # Installed here rather than using the Playwright container image: that
+      # image runs as root, and Chromium's sandbox — which browser.js keeps
+      # enabled on purpose — refuses to start as root. The runner user is
+      # unprivileged, so the sandbox works and CI matches production.
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Start server
+        # The e2e fixture is served from 127.0.0.1, which the SSRF guard blocks
+        # by design, so the guard is off for this run only. Safe here: the job
+        # renders nothing but its own local fixture.
+        run: |
+          UI_PEEPER_TRUST_NETWORK=1 PORT=3111 node src/server.js &
+          for i in $(seq 1 30); do
+            if curl -sf http://127.0.0.1:3111/api/health > /dev/null; then
+              echo "server up after ${i}s"
+              exit 0
+            fi
+            sleep 1
+          done
+          echo "server failed to start within 30s" >&2
+          exit 1
+
+      - name: Run end-to-end tests
+        run: npm run test:e2e
+
+  docker:
+    name: Docker image builds
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+
+      # Catches the failure mode the Dockerfile is most prone to: the pinned
+      # Playwright base image drifting out of step with the playwright version
+      # in package.json.
+      - name: Build image
+        run: docker build -t ui-peeper:ci .

@@ -163,7 +163,12 @@ Premium candidates (all of which the headless browser can already reach):
 
 ## Licence
 
-**AGPL-3.0-only** — see [`LICENSE`](./LICENSE).
+Copyright (C) 2026 Santiago Acosta.
+
+**AGPL-3.0-only** — see [`LICENSE`](./LICENSE). This program is free software: you can
+redistribute it and/or modify it under the terms of the GNU Affero General Public License,
+version 3. It is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 Free to use, self-host and modify. The one obligation that matters: if you run a
 **modified** version as a network service, you have to offer your users the source of
