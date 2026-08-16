@@ -42,8 +42,8 @@ test('unzip verifies and extracts the archive', (t) => {
 
   const dir = mkdtempSync(join(tmpdir(), 'zip-test-'));
   try {
-    // Include binary bytes and a non-ASCII name, since screenshots are binary
-    // and slugs come from arbitrary hostnames.
+    // Binary bytes plus a non-ASCII name: screenshots are binary, and entry
+    // names are built from arbitrary hostnames.
     const png = Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 0x00, 0xff, 0x7f]);
     const archive = join(dir, 'out.zip');
     writeFileSync(
@@ -54,12 +54,42 @@ test('unzip verifies and extracts the archive', (t) => {
       ]),
     );
 
+    // Validates every CRC and the central directory, including the entry with
+    // the non-ASCII name.
     execFileSync('unzip', ['-t', archive], { stdio: 'pipe' });
-    execFileSync('unzip', ['-o', '-q', archive, '-d', dir], { stdio: 'pipe' });
 
+    // Only the ASCII entry is round-tripped through the filesystem. The name a
+    // non-ASCII entry lands under depends on how the local unzip was built:
+    // with UNICODE_SUPPORT it converts UTF-8 to the current charset and escapes
+    // what will not fit (notes-caf#U00e9.txt), without it the raw bytes are
+    // written through. That is a property of the extractor, not of this writer,
+    // so the UTF-8 encoding is asserted against the archive bytes instead.
+    execFileSync('unzip', ['-o', '-q', archive, 'shot-375.png', '-d', dir], { stdio: 'pipe' });
     assert.deepEqual(readFileSync(join(dir, 'shot-375.png')), png, 'binary survives intact');
-    assert.equal(readFileSync(join(dir, 'notes-café.txt'), 'utf8'), 'résumé');
   } finally {
     rmSync(dir, { recursive: true, force: true });
   }
+});
+
+test('non-ASCII entry names are stored as UTF-8 with the flag set', () => {
+  const name = 'notes-café.txt';
+  const encoded = Buffer.from(name, 'utf8');
+  const data = Buffer.from('résumé', 'utf8');
+  const zip = createZip([{ name, data }]);
+
+  assert.ok(zip.includes(encoded), 'the UTF-8 encoded name appears in the archive');
+
+  // General purpose bit 11 (0x0800) is what tells a reader the name is UTF-8
+  // rather than the legacy CP437. Without it, readers guess, and non-ASCII
+  // names come out wrong.
+  const FLAG_UTF8 = 0x0800;
+  assert.equal(zip.readUInt16LE(6) & FLAG_UTF8, FLAG_UTF8, 'flag set in local header');
+
+  const centralAt = 30 + encoded.length + data.length;
+  assert.equal(zip.readUInt32LE(centralAt), 0x02014b50, 'central directory follows the entry');
+  assert.equal(
+    zip.readUInt16LE(centralAt + 8) & FLAG_UTF8,
+    FLAG_UTF8,
+    'flag set in central directory too',
+  );
 });
