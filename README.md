@@ -1,5 +1,8 @@
 # UI Peeper
 
+<img width="1600" height="1000" alt="image" src="https://github.com/user-attachments/assets/55d75767-69f5-4de2-9873-c35028b2338b" />
+
+
 View any webpage at several breakpoints at once, and export a full-page PNG of each.
 
 Paste a URL. Sites that allow embedding load as live, interactive iframes at 375 / 768 / 1440.
