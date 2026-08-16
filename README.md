@@ -174,9 +174,10 @@ The `AGPL-3.0 · source` link in the app header is that offer. **If you deploy a
 repoint it at your own repository** — leaving it aimed here does not satisfy §13 for your
 version.
 
-Contributions: see [`CONTRIBUTING.md`](./CONTRIBUTING.md). A CLA is not in place yet, so
-large contributions may be asked to wait until it is — relicensing later requires the
-permission of every contributor, and that is not fixable after the fact.
+Contributions: see [`CONTRIBUTING.md`](./CONTRIBUTING.md). Pull requests need a one-time
+signature on the [CLA](./CLA.md), handled automatically by a bot on your first PR. You
+keep copyright in your work; the agreement adds the right to sublicense, so the project
+can be relicensed later without needing to trace every past contributor.
 
 ## Roadmap note on the premium tier
 

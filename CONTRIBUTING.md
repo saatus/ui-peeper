@@ -2,24 +2,22 @@
 
 Thanks for looking. Issues and pull requests are welcome.
 
-## Licence and contributions — please read before opening a PR
+## Licence and the CLA — please read before opening a PR
 
-UI Peeper is licensed under **AGPL-3.0-only** (see [`LICENSE`](./LICENSE)). By
-contributing you agree that your contribution is licensed under those same terms.
+UI Peeper is licensed under **AGPL-3.0-only** (see [`LICENSE`](./LICENSE)).
 
-**A contributor licence agreement is not yet in place.** Until it is, this project
-cannot accept substantial code contributions, and PRs adding significant new code may
-be asked to wait. That is not a judgement on the work — it is a practical constraint:
+Pull requests require a one-time signature on the
+[Contributor License Agreement](./CLA.md). Open your PR as normal — a bot will comment
+with the link and the exact phrase to reply with. Signing takes about ten seconds and
+you only ever do it once; later PRs are checked against the recorded signature.
 
-Without a CLA, the copyright in each contribution stays with its author. Relicensing
-later — dual-licensing commercially, or moving a module to a different licence — would
-require the individual permission of every contributor who ever landed a patch. That
-gets impossible quickly, and it is the one licensing mistake that cannot be undone
-after the fact.
-
-Small fixes (typos, docs, obvious bugs) are fine to send now. If you want to build
-something larger, please open an issue first so we can sort the CLA out before you
-spend the time.
+**You keep the copyright in your work.** The CLA is a licence, not a transfer. What it
+adds is the right to sublicense, which is what lets the project be relicensed later —
+offering a commercial licence alongside AGPL, say — without tracking down every past
+contributor for individual written permission. Without that, a single unreachable
+contributor can freeze the licence permanently. It is the one licensing decision that
+genuinely cannot be fixed after the fact, which is why the bot is in place before the
+first outside PR rather than after.
 
 ## What AGPL means here, in practice
 
